@@ -8,7 +8,7 @@
   .header {
     background-color: #1a1a1d;
     color: #f7e733;
-    padding: 20px;
+    padding: 265px;
     text-align: center;
     border-bottom: 5px solid #f7e733;
   }
@@ -27,17 +27,25 @@
     margin-top: 10px;
   }
   
-  .header nav ul li {
+  .header nav ul button{
     margin: 0 20px;
   }
   
-  .header nav ul li a {
+  .header nav ul button a {
     color: #f7e733;
     text-decoration: none;
     font-size: 1.2em;
   }
   
-  .header nav ul li a:hover {
+  .header nav ul button a:hover {
     text-decoration: underline;
+  }
+
+  .header button {
+    background-color: #ffffff;
+    width: 20%;
+    height: 50px;
+    border-radius: 10px;
+    font-size: large;
   }
   
