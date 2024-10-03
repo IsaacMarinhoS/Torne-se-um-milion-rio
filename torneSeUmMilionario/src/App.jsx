@@ -1,6 +1,6 @@
 
 import './App.css'
-import { Header } from './components/header'
+import { Header } from './home/home'
 
 
 function App() {
@@ -9,7 +9,6 @@ function App() {
   return (
     <>
     <Header/>
-   
     </>
   )
 }
