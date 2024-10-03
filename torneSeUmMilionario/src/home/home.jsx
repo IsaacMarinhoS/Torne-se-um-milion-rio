@@ -1,4 +1,5 @@
 import "./home.css";
+import Link from "react-router-dom"
 
 export function Header() {
   return (
@@ -8,7 +9,7 @@ export function Header() {
         <ul>
           <button><a href="#inicio">Início</a></button>
           <button><a href="#regras">Regras</a></button>
-          <button><a href="#começar">Começar Jogo</a></button>
+          <button><Link href="/questoes">Começar Jogo</Link></button>
         </ul>
       </nav>
     </header>
