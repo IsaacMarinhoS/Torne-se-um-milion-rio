@@ -1,15 +1,16 @@
 import "./home.css";
-import Link from "react-router-dom"
+import { Link } from 'react-router-dom';
 
-export function Header() {
+export function Home() {
   return (
     <header className="header">
       <h1>torne-se um Milionário</h1>
       <nav>
         <ul>
-          <button><a href="#inicio">Início</a></button>
-          <button><a href="#regras">Regras</a></button>
-          <button><Link href="/questoes">Começar Jogo</Link></button>
+          {/* Corrigir para link */}
+          <button>Sobre</button>
+          <button><Link to="/regras">Regras</Link></button>
+          <button><Link to="/comecar">Começar Jogo</Link></button>
         </ul>
       </nav>
     </header>

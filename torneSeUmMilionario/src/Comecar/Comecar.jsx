@@ -1,6 +1,6 @@
-import './questoes.css';
+import './comecar.css';
 
-export function Questoes() {
+export function Comecar() {
 
     let i = 2;
     
