@@ -6,9 +6,9 @@ export function Header() {
       <h1>torne-se um Milionário</h1>
       <nav>
         <ul>
-          <li><a href="#home">Início</a></li>
-          <li><a href="#rules">Regras</a></li>
-          <li><a href="#start">Começar Jogo</a></li>
+          <button><a href="#home">Início</a></button>
+          <button><a href="#rules">Regras</a></button>
+          <button><a href="#start">Começar Jogo</a></button>
         </ul>
       </nav>
     </header>
