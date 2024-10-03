@@ -1,7 +1,6 @@
-
 import './App.css'
-import { Header } from './components/header'
-import { Questoes } from './components/questoes'
+import { Header, header } from './components/header'
+
 
 function App() {
  
@@ -9,7 +8,7 @@ function App() {
   return (
     <>
     <Header/>
-    <Questoes/>
+
     </>
   )
 }
