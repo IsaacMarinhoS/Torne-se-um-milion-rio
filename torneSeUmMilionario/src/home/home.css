@@ -39,7 +39,7 @@ html, body {
   margin-top: 20px;
 }
 
-.header nav ul button {
+.header nav ul .show {
   background-color: #ffffff;
   color: #1a1a1d;
   border: 2px solid transparent; 
@@ -52,7 +52,7 @@ html, body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.header nav ul button:hover {
+.header nav ul .show:hover {
   background-color: #f7e733;
   color: #1a1a1d;
   transform: scale(1.05);
@@ -60,16 +60,21 @@ html, body {
   border-color: #1a1a1d; 
 }
 
-.header nav ul button:focus {
+.header nav ul .show:focus {
   outline: none; 
   box-shadow: 0 0 0 4px rgba(247, 231, 51, 0.5);
 }
 
-.header nav ul button a {
+.header nav ul .show a {
   color: inherit;
   text-decoration: none;
 }
 
-.header nav ul button a:hover {
+.header nav ul .show a:hover {
   text-decoration: none;
 }
+
+.volume-control {
+  margin-top: 3%;
+}
+

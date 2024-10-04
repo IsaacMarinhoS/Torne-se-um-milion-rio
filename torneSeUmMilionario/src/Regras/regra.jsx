@@ -4,11 +4,10 @@ export function Regra() {
     return (
       <header className='regra' >
         1. O Jogo
-O jogo tem um total de 16 perguntas, dividas em 4 fases. A cada fase, o valor e a dificuldade das perguntas aumenta, e o prêmio final é de 1 Milhão.
+O jogo tem um total de 50 perguntas.Cada pergunta vale 20.000, e o prêmio final é de 1 Milhão.
 
-Caso o jogador erre uma pergunta, ele leva metade do prêmio que acumulou e o jogo acaba. Se ele errar a última pergunta, ele perde tudo.
+Caso o jogador erre 3 pergunta, ele leva metade do prêmio que acumulou e o jogo acaba. Se ele errar a última pergunta, ele perde tudo.
 
-Se o jogador desistir, ele leva todo o valor que acumulou.
 
 O jogador tem direito a pular a pergunta 3 vezes, mas pular não se aplica à pergunta final.
 
