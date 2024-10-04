@@ -7,6 +7,9 @@ export function Comecar() {
     const [feedback, setFeedback] = useState('');
     const [montante, setMontante] = useState(20000);
     const [tentativas, setTentativas] = useState(2);
+    const [dica, setDica] = useState('');
+    const [jogoAtivo, setJogoAtivo] = useState(true); // Adiciona um estado para controlar o jogo
+
 
   const questoes = [
     {
@@ -312,58 +315,88 @@ export function Comecar() {
 ]
 
 const handleRespostaSelecionada = (alternativa) => {
-  if (respostaSelecionada === null) { // Garante que não seja possível selecionar outra resposta
-      setRespostaSelecionada(alternativa);
-      if (alternativa === questoes[indiceAtual].resposta) {
-          const novoMontante = montante + 20000;
-          const montanteFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(novoMontante);
-          setFeedback(`Correto! Você está perto de se tornar um milionário! Você ganhou R$ 20.000,00, Seu montante total é de ${montanteFormatado}`);
-          setMontante(novoMontante);
-      } else {
-          setFeedback(`Incorreto! Preste mais atenção na próxima. Restam ${tentativas} tentativas.`);
-          setTentativas(tentativas - 1);
-      }
-  }
-};
+        if (respostaSelecionada === null) {
+            setRespostaSelecionada(alternativa);
+            if (alternativa === questoes[indiceAtual].resposta) {
+                const novoMontante = montante + 20000;
+                const montanteFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(novoMontante);
+                setFeedback(`Correto! Você está perto de se tornar um milionário! Você ganhou R$ 20.000,00, Seu montante total é de ${montanteFormatado}`);
+                setMontante(novoMontante);
+            } else {
+                setTentativas(tentativas - 1);
+                if (tentativas - 1 === 0) {
+                    setFeedback(`Incorreto! Você não tem mais tentativas. Fim do jogo!`);
+                    setJogoAtivo(false); // Desativa o jogo
+                } else {
+                    setFeedback(`Incorreto! Preste mais atenção na próxima. Restam ${tentativas - 1} tentativas.`);
+                }
+            }
+        }
+    };
 
-const handleNext = () => {
-  setRespostaSelecionada(null);
-  setFeedback('');
-  if (indiceAtual < questoes.length - 1) {
-      setIndiceAtual(indiceAtual + 1);
-  }
-};
+    const handleNext = () => {
+        setRespostaSelecionada(null);
+        setFeedback('');
+        setDica(''); // Limpa a dica ao passar para a próxima pergunta
+        if (indiceAtual < questoes.length - 1) {
+            setIndiceAtual(indiceAtual + 1);
+        }
+    };
 
-return (
-  <div>
-      {tentativas >= 0 ? (
-          <div>
-              <div key={questoes[indiceAtual].id}>
-                  <h2>{questoes[indiceAtual].pergunta}</h2>
-                  <ul>
-                      {questoes[indiceAtual].alternativas.map(alternativa => (
-                          <li 
-                              key={alternativa} 
-                              onClick={() => handleRespostaSelecionada(alternativa)} 
-                              style={{ 
-                                  cursor: 'pointer', 
-                                  fontWeight: respostaSelecionada === alternativa ? 'bold' : 'normal',
-                                  color: respostaSelecionada ? (alternativa === questoes[indiceAtual].resposta ? 'green' : 'red') : 'black' // Cor para feedback visual
-                              }}
-                          >
-                              {alternativa}
-                          </li>
-                      ))}
-                  </ul>
-                  {respostaSelecionada && <p>{feedback}</p>}
-              </div>
-              <div>
-                  <button onClick={handleNext} disabled={indiceAtual === questoes.length - 1 || respostaSelecionada === null}>Próximo</button>
-              </div>
-          </div>
-      ) : (
-          <p>Você não tem mais tentativas!</p>
-      )}
-  </div>
-);
+    const handleDica = () => {
+        const dicas = [
+            "É uma personagem poderosa com habilidades especiais.",
+            "Ela é uma artista conhecida por seu estilo pessoal e letras emocionantes.",
+            "A série é uma mistura de ação e drama com muitos reviravoltas.",
+            // Adicione mais dicas conforme necessário
+        ];
+        
+        if (indiceAtual < dicas.length) {
+            setDica(dicas[indiceAtual]);
+        } else {
+            setDica('Não há mais dicas disponíveis.');
+        }
+    };
+
+    const handleReiniciar = () => {
+        setIndiceAtual(0);
+        setRespostaSelecionada(null);
+        setFeedback('');
+        setMontante(20000);
+        setTentativas(2);
+        setDica('');
+        setJogoAtivo(true); // Reinicia o jogo
+    };
+
+    return (
+        <div>
+            {jogoAtivo ? (
+                <div>
+                    {tentativas >= 0 ? (
+                        <div key={questoes[indiceAtual].id}>
+                            <h2>{questoes[indiceAtual].pergunta}</h2>
+                            <ul>
+                                {questoes[indiceAtual].alternativas.map((alternativa) => (
+                                    <li key={alternativa} onClick={() => handleRespostaSelecionada(alternativa)}>
+                                        {alternativa}
+                                    </li>
+                                ))}
+                            </ul>
+                            <button onClick={handleDica}>Ajuda</button>
+                            {dica && <p>Dica: {dica}</p>}
+                            {feedback && <p>{feedback}</p>}
+                            <button onClick={handleNext} disabled={respostaSelecionada === null}>Próxima Pergunta</button>
+                        </div>
+                    ) : (
+                        <h2>Fim do Jogo! Você perdeu!</h2>
+                    )}
+                </div>
+            ) : (
+                <div>
+                    <h2>Você perdeu! Deseja começar de novo?</h2>
+                    <button onClick={handleReiniciar}>Reiniciar Jogo</button>
+                </div>
+            )}
+        </div>
+    );
 }
