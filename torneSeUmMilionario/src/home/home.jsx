@@ -7,7 +7,6 @@ export function Home() {
       <h1>torne-se um Milionário</h1>
       <nav>
         <ul>
-          {/* Corrigir para link */}
           <button>Sobre</button>
           <button><Link to="/regras">Regras</Link></button>
           <button><Link to="/comecar">Começar Jogo</Link></button>
