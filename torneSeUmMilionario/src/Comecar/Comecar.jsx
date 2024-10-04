@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import './Comecar.css';
 
 export function Comecar() {
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [respostaSelecionada, setRespostaSelecionada] = useState(null);
     const [feedback, setFeedback] = useState('');
-    const [montante, setMontante] = useState(0);
-    const [tentativas, setTentativas] = useState(3);
-
+    const [montante, setMontante] = useState(20000);
+    const [tentativas, setTentativas] = useState(2);
 
   const questoes = [
     {
@@ -312,14 +312,17 @@ export function Comecar() {
 ]
 
 const handleRespostaSelecionada = (alternativa) => {
-  setRespostaSelecionada(alternativa);
-  if (alternativa === questoes[indiceAtual].resposta) {
-      setFeedback('Correto! Você está perto de se tornar um milionário.');
-      setMontante(montante + 20000);
-  } else {
-      const tentativasRestantes = tentativas - 1;
-      setFeedback(`Incorreto! Preste mais atenção na próxima. Restam ${tentativasRestantes} tentativas.`);
-      setTentativas(tentativasRestantes);
+  if (respostaSelecionada === null) { // Garante que não seja possível selecionar outra resposta
+      setRespostaSelecionada(alternativa);
+      if (alternativa === questoes[indiceAtual].resposta) {
+          const novoMontante = montante + 20000;
+          const montanteFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(novoMontante);
+          setFeedback(`Correto! Você está perto de se tornar um milionário! Você ganhou R$ 20.000,00, Seu montante total é de ${montanteFormatado}`);
+          setMontante(novoMontante);
+      } else {
+          setFeedback(`Incorreto! Preste mais atenção na próxima. Restam ${tentativas} tentativas.`);
+          setTentativas(tentativas - 1);
+      }
   }
 };
 
@@ -331,17 +334,9 @@ const handleNext = () => {
   }
 };
 
-const handleRestart = () => {
-  setIndiceAtual(0);
-  setTentativas(3);
-  setMontante(0);
-  setRespostaSelecionada(null);
-  setFeedback('');
-};
-
 return (
   <div>
-      {tentativas > 0 ? (
+      {tentativas >= 0 ? (
           <div>
               <div key={questoes[indiceAtual].id}>
                   <h2>{questoes[indiceAtual].pergunta}</h2>
@@ -350,7 +345,11 @@ return (
                           <li 
                               key={alternativa} 
                               onClick={() => handleRespostaSelecionada(alternativa)} 
-                              style={{ cursor: 'pointer', fontWeight: respostaSelecionada === alternativa ? 'bold' : 'normal' }}
+                              style={{ 
+                                  cursor: 'pointer', 
+                                  fontWeight: respostaSelecionada === alternativa ? 'bold' : 'normal',
+                                  color: respostaSelecionada ? (alternativa === questoes[indiceAtual].resposta ? 'green' : 'red') : 'black' // Cor para feedback visual
+                              }}
                           >
                               {alternativa}
                           </li>
@@ -359,14 +358,11 @@ return (
                   {respostaSelecionada && <p>{feedback}</p>}
               </div>
               <div>
-                  <button onClick={handleNext} disabled={indiceAtual === questoes.length - 1}>Próximo</button>
+                  <button onClick={handleNext} disabled={indiceAtual === questoes.length - 1 || respostaSelecionada === null}>Próximo</button>
               </div>
           </div>
       ) : (
-          <div>
-              <h2>Fim do jogo! Você terminou com um montante de R${montante}.</h2>
-              <button onClick={handleRestart}>Reiniciar</button>
-          </div>
+          <p>Você não tem mais tentativas!</p>
       )}
   </div>
 );
